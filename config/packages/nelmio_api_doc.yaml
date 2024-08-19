@@ -1,0 +1,29 @@
+nelmio_api_doc:
+    documentation:
+        servers:
+            - url: 'http://localhost:888'
+              description: Development
+            - url: 'https://api.zood.fun'
+              description: Production
+        info:
+            title: ZooD Industries
+            description: Свободная соцсеть.
+            version: 0.8.0
+        tags:
+            - name: Users
+              description: 'Пользователь социальной сети'
+            - name: Profiles
+              description: 'Пользовательский профиль'
+            - name: Friends
+              description: 'Связь двух профилей'
+            - name: Chats
+              description: 'Обмен сообщениями'
+        components:
+            securitySchemes:
+                Bearer:
+                    type: http
+                    scheme: bearer
+                    bearerFormat: JWT
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

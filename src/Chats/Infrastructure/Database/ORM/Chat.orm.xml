@@ -1,0 +1,18 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Chats\Domain\Entity\Chat" table="chats_chat">
+        <id name="id" type="string" length="26">
+            <generator strategy="NONE"/>
+        </id>
+        <field name="title" type="string" length="32"/>
+        <field name="description" type="string" length="512"/>
+<!--        mapped by указывает на отдельное поле(chat)-->
+        <one-to-many field="roles" target-entity="App\Chats\Domain\Entity\ChatRole" mapped-by="chat" orphan-removal="true">
+            <cascade/>
+        </one-to-many>
+    </entity>
+
+</doctrine-mapping>

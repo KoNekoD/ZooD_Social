@@ -1,0 +1,20 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Chats\Domain\Entity\ChatRole" table="chats_role">
+        <id name="id" type="integer">
+            <generator strategy="IDENTITY"/>
+        </id>
+        <many-to-one field="chat" target-entity="App\Chats\Domain\Entity\Chat" inversed-by="roles">
+            <join-column name="chat_id" referenced-column-name="id"/>
+        </many-to-one>
+        <field name="name" type="string" length="32"/>
+        <field name="style" type="text"/>
+        <field name="creator" column="is_creator" type="boolean"/>
+        <field name="canRestrict" column="can_restrict" type="boolean"/>
+        <field name="default" column="is_default" type="boolean"/>
+    </entity>
+
+</doctrine-mapping>

@@ -1,0 +1,19 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="App\Friends\Domain\Entity\Friend" table="friends_friend">
+        <id name="profile" association-key="true">
+            <generator strategy="NONE"/>
+        </id>
+        <id name="friend" association-key="true">
+            <generator strategy="NONE"/>
+        </id>
+        <many-to-one field="profile" target-entity="App\Profiles\Domain\Entity\Profile">
+            <join-column referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+        <many-to-one field="friend" target-entity="App\Profiles\Domain\Entity\Profile">
+            <join-column referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+        <field name="relationType" type="smallint"/>
+    </entity>
+
+</doctrine-mapping>

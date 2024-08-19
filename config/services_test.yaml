@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        autowire: true
+
+    App\Tests\Resource\Fixture\:
+        resource: '%kernel.project_dir%/tests/Resource/Fixture/*'
+        tags:
+            - { "name": "doctrine.fixture.orm" }
+
+    App\Shared\Infrastructure\Bus\CommandBus:
+        public: true
+
+    App\Shared\Infrastructure\Bus\QueryBus:
+        public: true
+
+    App\Shared\Infrastructure\Bus\EventBus:
+        public: true
+
+    # TODO.php
+    #App\Chats\Domain\Factory\:
+    #    resource: '../src/Skills/Domain/Factory'
+    #    public: true
+    #App\Chats\Domain\Specification\:
+    #    resource: '../src/Skills/Domain/Specification'
+    #    public: true
+    #App\Chats\Domain\Repository\:
+    #    resource: '../src/Skills/Domain/Repository'
+    #    public: true

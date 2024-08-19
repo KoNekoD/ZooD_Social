@@ -1,0 +1,25 @@
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="https://doctrine-project.org/schemas/orm/doctrine-mapping
+                          https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <entity name="App\Chats\Domain\Entity\ChatMessage" table="chats_message">
+        <id name="id" type="string">
+            <generator strategy="NONE"/>
+        </id>
+        <id name="from" type="string" association-key="true">
+            <generator strategy="NONE"/>
+        </id>
+        <id name="chat" type="string" association-key="true">
+            <generator strategy="NONE"/>
+        </id>
+        <many-to-one field="from" target-entity="App\Profiles\Domain\Entity\Profile">
+            <join-column referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+        <many-to-one field="chat" target-entity="App\Chats\Domain\Entity\Chat">
+            <join-column referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+        <field name="content" type="text"/>
+    </entity>
+
+</doctrine-mapping>

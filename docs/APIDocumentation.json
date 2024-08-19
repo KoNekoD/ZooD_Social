@@ -1,0 +1,1009 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "ZooD Industries",
+    "description": "Свободная соцсеть.",
+    "version": "0.8.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:888",
+      "description": "Development"
+    },
+    {
+      "url": "https://api.zood.fun",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/doc.json": {
+      "get": {
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/api/users/me": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "summary": "Получить информацию о своём пользователе",
+        "operationId": "get_app_users_infrastructure_getmeaction__invoke",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/profiles": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Получить список своих профилей",
+        "operationId": "get_api_profiles_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "example": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProfileDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "put": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Изменить данные профиля",
+        "operationId": "put_api_profiles_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProfileUpdateCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Создать новый профиль",
+        "operationId": "post_api_profiles_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateProfileCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/profiles/{profileId}": {
+      "get": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Получить информацию о профиле",
+        "operationId": "get_api_profiles_profile",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindProfileByIdQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProfileDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Profiles"
+        ],
+        "summary": "Удалить профиль",
+        "operationId": "delete_api_profiles_delete",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/friends/{senderProfileId}/{destinationProfileId}": {
+      "post": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Добавить друга",
+        "operationId": "post_api_friends_add",
+        "parameters": [
+          {
+            "name": "senderProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "destinationProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Удалить друга",
+        "operationId": "delete_api_friends_remove",
+        "parameters": [
+          {
+            "name": "senderProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "destinationProfileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/friends/{profileId}/{friendId}": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Получить информацию о дружбе",
+        "operationId": "get_api_friends_item",
+        "parameters": [
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "friendId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FriendDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/friends/{profileId}": {
+      "get": {
+        "tags": [
+          "Friends"
+        ],
+        "summary": "Получить список дружб*",
+        "description": "Дружба это не только друг, это также входящий/исходящий запрос в друзья",
+        "operationId": "get_api_friends_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "example": 1
+          },
+          {
+            "name": "relationType",
+            "in": "query",
+            "example": 1
+          },
+          {
+            "name": "profileId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FriendDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Получить список чатов, в которых состоит профиль",
+        "operationId": "get_api_messenger_chats_get",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetChatsQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ChatDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Создать чат",
+        "operationId": "post_api_messenger_chats_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateChatCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Удалить чат",
+        "operationId": "delete_api_messenger_chats_delete",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteChatCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/{chatId}": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Получить информацию о чате",
+        "operationId": "get_api_messenger_chats_find",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindChatByIdQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChatDTO"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/{chatId}/messages": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Получить историю сообщений",
+        "operationId": "get_api_chats_get_messages",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FindMessagesByChatQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MessageByChatDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/message": {
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Отправить сообщение",
+        "operationId": "post_api_chats_message_send",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMessageCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/{chatId}/participants/{page}": {
+      "get": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Получить список участников чата",
+        "operationId": "get_api_messenger_chats_participants_get",
+        "parameters": [
+          {
+            "name": "chatId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetParticipantsQuery"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ParticipantDTO"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/invite/handle": {
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Принять приглашение в чат",
+        "operationId": "post_api_messenger_chats_invite_handle_accept",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AcceptInviteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Отвергнуть приглашение в чат",
+        "operationId": "delete_api_messenger_chats_invite_handle_reject",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RejectInviteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    },
+    "/api/chats/invite": {
+      "post": {
+        "tags": [
+          "Chats"
+        ],
+        "summary": "Пригласить в чат",
+        "operationId": "post_api_messenger_chats_invite",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendInviteCommand"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Успешно"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProfileDTO": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "ProfileUpdateCommand": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "CreateProfileCommand": {
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "type": "object"
+      },
+      "FindProfileByIdQuery": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FriendDTO": {
+        "properties": {
+          "senderProfileId": {
+            "type": "string"
+          },
+          "destinationProfileId": {
+            "type": "string"
+          },
+          "relationType": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "GetChatsQuery": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ChatDTO": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RoleDTO"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "CreateChatCommand": {
+        "properties": {
+          "chatTitle": {
+            "type": "string"
+          },
+          "chatDescription": {
+            "type": "string"
+          },
+          "creatorProfileId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "DeleteChatCommand": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "chatId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FindChatByIdQuery": {
+        "properties": {
+          "chatId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "FindMessagesByChatQuery": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "chatId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "MessageByChatDTO": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "from": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SendMessageCommand": {
+        "properties": {
+          "fromId": {
+            "type": "string"
+          },
+          "chatId": {
+            "type": "string"
+          },
+          "content": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "GetParticipantsQuery": {
+        "properties": {
+          "chatId": {
+            "type": "string"
+          },
+          "page": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "ParticipantDTO": {
+        "properties": {
+          "profile": {
+            "$ref": "#/components/schemas/ProfileDTO"
+          },
+          "roleId": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "AcceptInviteCommand": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "chatId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "RejectInviteCommand": {
+        "properties": {
+          "profileId": {
+            "type": "string"
+          },
+          "chatId": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "SendInviteCommand": {
+        "properties": {
+          "chatId": {
+            "type": "string"
+          },
+          "senderProfileId": {
+            "type": "string"
+          },
+          "destinationProfileId": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "integer"
+          }
+        },
+        "type": "object"
+      },
+      "RoleDTO": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "style": {
+            "type": "string"
+          },
+          "creator": {
+            "type": "boolean"
+          },
+          "canRestrict": {
+            "type": "boolean"
+          },
+          "default": {
+            "type": "boolean"
+          }
+        },
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "bearerFormat": "JWT",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "Users",
+      "description": "Пользователь социальной сети"
+    },
+    {
+      "name": "Profiles",
+      "description": "Пользовательский профиль"
+    },
+    {
+      "name": "Friends",
+      "description": "Связь двух профилей"
+    },
+    {
+      "name": "Chats",
+      "description": "Обмен сообщениями"
+    }
+  ]
+}
